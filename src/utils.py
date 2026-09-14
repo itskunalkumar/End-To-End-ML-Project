@@ -7,7 +7,6 @@ import dill
 import pickle
 from sklearn.metrics import r2_score
 from sklearn.model_selection import GridSearchCV
-from pytest import param
 
 from src.exception import CustomException
 
