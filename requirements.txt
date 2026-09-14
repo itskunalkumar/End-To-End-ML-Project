@@ -5,7 +5,7 @@ Matplotlib
 Seaborn
 dill
 catboost
-xgboost
+xgboost==1.6.2
 Flask
 -e .
 
