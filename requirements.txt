@@ -7,5 +7,7 @@ dill
 catboost
 xgboost
 Flask
+gunicorn
+joblib
 
 -e .
