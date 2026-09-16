@@ -1,1 +1,82 @@
-<h1>Welcome to the ML Project</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Exam Performance Indicator</title>
+  <meta name="description" content="Predict a student's math score from academic and demographic factors using a tuned regression model." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..680&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+  <div class="bg-glow"></div>
+
+  <div class="page">
+    <nav class="site-nav">
+      <a class="brand" href="{{ url_for('index') }}">
+        <span class="brand-mark"></span>
+        <span class="brand-name">Exam Performance Indicator</span>
+      </a>
+      <a class="nav-link" href="https://github.com/itskunalkumar/End-To-End-ML-Project" target="_blank" rel="noopener">
+        Source on GitHub
+      </a>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-copy">
+        <h1>Every score tells a story before the exam does.</h1>
+        <p>
+          This tool estimates a student's math score from reading and
+          writing performance, study preparation, and background factors —
+          trained and tuned across eight regression models so the
+          strongest one does the predicting.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="{{ url_for('predict_datapoint') }}">Start a prediction</a>
+          <a class="btn btn-ghost" href="#how-it-works">How it works</a>
+        </div>
+      </div>
+
+      <div class="tilt-stage">
+        <div class="report-card">
+          <p class="report-card__eyebrow">Sample insight, not a real record</p>
+          <div class="report-card__row"><span>Test preparation</span><b>Completed</b></div>
+          <div class="report-card__row"><span>Reading score</span><b>82</b></div>
+          <div class="report-card__row"><span>Writing score</span><b>79</b></div>
+          <div class="report-card__score">
+            <span class="report-card__score-value">77</span>
+            <span class="report-card__score-label">predicted math score</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero-stats" id="how-it-works">
+      <div class="stat">
+        <div class="stat-value">8</div>
+        <div class="stat-label">regression models trained and grid-searched, best one kept</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">7</div>
+        <div class="stat-label">input factors, from lunch type to test preparation</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">R²</div>
+        <div class="stat-label">scored against a held-out test split before deployment</div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <span>Built with scikit-learn, XGBoost &amp; CatBoost — served on AWS ECS.</span>
+      <span>Educational demo, not an academic placement tool.</span>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="{{ url_for('static', filename='js/network-bg.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/interactions.js') }}"></script>
+</body>
+</html>

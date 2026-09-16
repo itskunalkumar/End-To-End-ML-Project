@@ -1,111 +1,138 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Predict a Math Score — Student Exam Performance Indicator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..680&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
 <body>
-    <div class="login">
-       <h1>Student Exam Performance Indicator</h1>
-   
-       <form action="{{ url_for('predict_datapoint')}}" method="post">
-        <!-- <h1>
-            <legend>Student Exam Performance Prediction</legend>
-        </h1> -->
-        <div class="mb-3">
-            <label class="form-label">Gender</label>
-            <select class="form-control" name="gender" placeholder="Enter you Gender" required>
-                <option class="placeholder" selected disabled value="">Select your Gender</option>
-                <option value="male">
-                    Male
-                </option>
-                <option value="female">
-                    Female
-                </option>
+  <canvas id="bg-canvas"></canvas>
+  <div class="bg-glow"></div>
+
+  <div class="page">
+    <nav class="site-nav">
+      <a class="brand" href="{{ url_for('index') }}">
+        <span class="brand-mark"></span>
+        <span class="brand-name">Exam Performance Indicator</span>
+      </a>
+      <a class="nav-link" href="{{ url_for('index') }}">Back to overview</a>
+    </nav>
+
+    <header class="predictor-header">
+      <h1>Predict a math score</h1>
+      <p>Fill in the student's background and their reading and writing scores. The trained model estimates their math score from these seven factors.</p>
+    </header>
+
+    <main class="predictor">
+      <form class="form-card predict-form" action="{{ url_for('predict_datapoint') }}" method="post">
+        <div class="field-grid">
+          <div class="field">
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender" required>
+              <option value="" selected disabled>Select gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
             </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Race or Ethnicity</label>
-            <select class="form-control" name="race_ethnicity" placeholder="Enter your ethnicity" required>
-                <option class="placeholder" selected disabled value="">Select Ethnicity</option>
-                <option value="group A">
-                    Group A
-                </option>
-                <option value="group B">
-                    Group B
-                </option>
-                <option value="group C">
-                    Group C
-                </option>
-                <option value="group D">
-                    Group D
-                </option>
-                <option value="group E">
-                    Group E
-                </option>
+          </div>
+
+          <div class="field">
+            <label for="race_ethnicity">Race or ethnicity group</label>
+            <select id="race_ethnicity" name="race_ethnicity" required>
+              <option value="" selected disabled>Select group</option>
+              <option value="group A">Group A</option>
+              <option value="group B">Group B</option>
+              <option value="group C">Group C</option>
+              <option value="group D">Group D</option>
+              <option value="group E">Group E</option>
             </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Parental Level of Education</label>
-            <select class="form-control" name="parental_level_of_education"
-                placeholder="Enter you Parent Education" required>
-                <option class="placeholder" selected disabled value="">Select Parent Education</option>
-                <option value="associate's degree">
-                    associate's degree
-                </option>
-                <option value="bachelor's degree">
-                    bachelor's degree
-                </option>
-                <option value="high school">
-                    high school
-                </option>
-                <option value="master's degree">
-                    master's degree
-                </option>
-                <option value="some college">
-                    some college
-                </option>
-                <option value="some high school">
-                    some high school
-                </option>
+          </div>
+
+          <div class="field">
+            <label for="parental_level_of_education">Parental level of education</label>
+            <select id="parental_level_of_education" name="parental_level_of_education" required>
+              <option value="" selected disabled>Select education level</option>
+              <option value="some high school">Some high school</option>
+              <option value="high school">High school</option>
+              <option value="some college">Some college</option>
+              <option value="associate's degree">Associate's degree</option>
+              <option value="bachelor's degree">Bachelor's degree</option>
+              <option value="master's degree">Master's degree</option>
             </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Lunch Type</label>
-            <select class="form-control" name="lunch" placeholder="Enter you Lunch" required>
-                <option class="placeholder" selected disabled value="">Select Lunch Type</option>
-                <option value="free/reduced">
-                    free/reduced
-                </option>
-                <option value="standard">
-                    standard
-                </option>
+          </div>
+
+          <div class="field">
+            <label for="lunch">Lunch type</label>
+            <select id="lunch" name="lunch" required>
+              <option value="" selected disabled>Select lunch type</option>
+              <option value="standard">Standard</option>
+              <option value="free/reduced">Free / reduced</option>
             </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Test preparation Course</label>
-            <select class="form-control" name="test_preparation_course" placeholder="Enter you Course"
-                required>
-                <option class="placeholder" selected disabled value="">Select Test_course</option>
-                <option value="none">
-                    None
-                </option>
-                <option value="completed">
-                    Completed
-                </option>
+          </div>
+
+          <div class="field">
+            <label for="test_preparation_course">Test preparation course</label>
+            <select id="test_preparation_course" name="test_preparation_course" required>
+              <option value="" selected disabled>Select status</option>
+              <option value="none">None</option>
+              <option value="completed">Completed</option>
             </select>
+          </div>
+
+          <div class="field score-field">
+            <label for="reading_score">Reading score</label>
+            <input type="number" id="reading_score" name="reading_score" min="0" max="100" placeholder="0–100" required />
+            <span class="score-value">— / 100</span>
+          </div>
+
+          <div class="field score-field full">
+            <label for="writing_score">Writing score</label>
+            <input type="number" id="writing_score" name="writing_score" min="0" max="100" placeholder="0–100" required />
+            <span class="score-value">— / 100</span>
+          </div>
         </div>
-        <div class="mb-3">
-            <label class="form-label">Writing Score out of 100</label>
-            <input class="form-control" type="number" name="reading_score"
-                placeholder="Enter your Reading score" min='0' max='100' required />
+
+        <div class="submit-row">
+          <button class="submit-btn" type="submit">Predict math score</button>
+          <span class="submit-note">Runs the saved model instantly — nothing is stored.</span>
         </div>
-        <div class="mb-3">
-            <label class="form-label">Reading Score out of 100</label>
-            <input class="form-control" type="number" name="writing_score"
-                placeholder="Enter your Writing Score" min='0' max='100' required />
+      </form>
+
+      <div class="result-panel">
+        <div class="result-card" data-has-result="{% if results is defined and results is not none %}true{% else %}false{% endif %}">
+          <div class="result-face result-face--front">
+            <div class="result-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19V5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z" />
+                <path d="M14 3v5h5" />
+                <path d="M9 13h6" />
+                <path d="M9 17h6" />
+              </svg>
+            </div>
+            <h3>Waiting on your inputs</h3>
+            <p>Submit the form and this card will flip to reveal the predicted math score.</p>
+          </div>
+          <div class="result-face result-face--back">
+            <p class="result-back-label">Predicted math score</p>
+            <div class="result-back-value">{% if results is defined and results is not none %}{{ "%.0f"|format(results) }}{% else %}—{% endif %}</div>
+            <p class="result-back-suffix">out of 100</p>
+            <p class="result-back-note">Estimated from the reading and writing scores and background factors you entered — not an official grade.</p>
+          </div>
         </div>
-        <div class="mb-3">
-            <input class="btn btn-primary" type="submit" value="Predict your Maths Score" required />
-        </div>
-    </form>
-    <h2>
-       The prediction is {{results}}
-    </h2>
-   <body>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <span>Model retrained locally from <code>notebook/data/stud.csv</code>.</span>
+      <span><a class="nav-link" href="{{ url_for('index') }}">Overview</a></span>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="{{ url_for('static', filename='js/network-bg.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/interactions.js') }}"></script>
+</body>
 </html>
