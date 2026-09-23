@@ -166,7 +166,7 @@ This project ships with a full **CI/CD pipeline** (`.github/workflows/aws.yml`):
 ## 👤 Author
 
 **Kunal Kumar**
-Mechanical Engineering graduate transitioning into Data Analytics & ML Engineering
+Mechanical Engineering graduate transitioning into Data Science & ML Engineering
 🔗 [GitHub](https://github.com/itskunalkumar)
 
 ---
